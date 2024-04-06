@@ -60,6 +60,44 @@ app.post('/api/signup', (req, res) => {
   });
 });
 
+app.post('/api/login', (req, res) => {
+  const { email, password } = req.body;
+  connection.query('SELECT * FROM admins WHERE email = ?', [email], (error, adminResults) => {
+    if (error) {
+      res.status(500).json({ error: 'Error querying admins table:', error });
+    } else if (adminResults.length > 0) {
+      const admin = adminResults[0];
+      if (admin.password_hash == password) {
+        res.status(200).json({ isAuthenticated: true, isAdmin: true, name: admin.username })
+      } else {
+        res.status(401).json({ isAuthenticated: false, isAdmin: false, error: 'Incorrect password' });
+      }
+    } else {
+      connection.query('SELECT * FROM customers WHERE email = ?', [email], (error, results) => {
+        if (error) {
+          console.error('Error querying database:', error);
+          res.status(500).json({ error: 'Error querying database' });
+        } else if (results.length === 0) {
+          res.status(404).json({ error: 'Email not found' });
+        } else {
+          const user = results[0];
+
+          bcrypt.compare(password, user.password_hash, (err, result) => {
+            if (err) {
+              console.error('Error comparing passwords:', err);
+              res.status(500).json({ error: 'Error comparing passwords' });
+            } else if (result) {
+              res.status(200).json({ isAuthenticated: true, isAdmin: false, name: customer.name })
+            } else {
+              res.status(401).json({ isAuthenticated: false, isAdmin: false, error: 'Incorrect password' });
+            }
+          });
+        };
+      });
+    }
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
