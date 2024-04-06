@@ -87,7 +87,7 @@ app.post('/api/login', (req, res) => {
               console.error('Error comparing passwords:', err);
               res.status(500).json({ error: 'Error comparing passwords' });
             } else if (result) {
-              res.status(200).json({ isAuthenticated: true, isAdmin: false, name: customer.name })
+              res.status(200).json({ isAuthenticated: true, isAdmin: false, name: user.name })
             } else {
               res.status(401).json({ isAuthenticated: false, isAdmin: false, error: 'Incorrect password' });
             }
