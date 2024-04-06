@@ -9,11 +9,11 @@
   "author": "Santiago",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
     "mysql": "^2.18.1",
     "node": "^18.20.1"
   },
-  "devDependencies": {},
   "description": "",
   "engines": {
     "node": "20.11.1"

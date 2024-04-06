@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -34,18 +35,26 @@ app.get('/api/products', (req, res) => {
 
 app.post('/api/signup', (req, res) => {
   const { firstName, lastName, email, phoneNumber, password, confirmPassword } = req.body;
-  const sql = 'INSERT INTO customers (first_name, last_name, email, phone, password_hash) VALUES (?, ?, ?, ?, ?)'
-  const values = [firstName, lastName, email, phoneNumber, password]
-  connection.query(sql, values, (error, results) => {
-    if (error) {
-      console.error('Error creating account:', error);
-      res.status(500).json({error: 'Error creating account'});
+  bcrypt.hash(password, 10, (err, hash) => {
+    if(err) {
+      console.log(err);
     } else {
-      console.log('Account created successfully');
-      res.status(200).json({ message: 'Account created successfully'});
+      password = hash;
+      console.log('Hashed password');
+      const sql = 'INSERT INTO customers (first_name, last_name, email, phone, password_hash) VALUES (?, ?, ?, ?, ?)'
+      const values = [firstName, lastName, email, phoneNumber, password]
+      connection.query(sql, values, (error, results) => {
+        if (error) {
+          console.error('Error creating account:', error);
+          res.status(500).json({error: 'Error creating account'});
+        } else {
+          console.log('Account created successfully');
+          res.status(200).json({ message: 'Account created successfully'});
+        }
+      });
     }
-  })
-})
+  });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
