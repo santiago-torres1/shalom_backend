@@ -62,7 +62,7 @@ app.post('/api/signup', (req, res) => {
 
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
-  connection.query('SELECT * FROM admins WHERE email = ?', [email], (error, adminResults) => {
+  connection.query('SELECT * FROM admins WHERE username = ?', [email], (error, adminResults) => {
     if (error) {
       res.status(500).json({ error: 'Error querying admins table:', error });
     } else if (adminResults.length > 0) {
