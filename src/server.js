@@ -1,11 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
-<<<<<<< HEAD
 const bcrypt = require('bcrypt');
-=======
 const cors = require('cors');
-
->>>>>>> be122d48f1a10d6625d701a0812347e86e7013ae
 
 const app = express();
 
