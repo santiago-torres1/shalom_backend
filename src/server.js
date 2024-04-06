@@ -38,14 +38,15 @@ app.get('/api/products', (req, res) => {
 
 app.post('/api/signup', (req, res) => {
   const { firstName, lastName, email, phoneNumber, password, confirmPassword } = req.body;
+  let passwordHash = password;
   bcrypt.hash(password, 10, (err, hash) => {
     if(err) {
       console.log(err);
     } else {
-      password = hash;
+      passwordHash = hash;
       console.log('Hashed password');
       const sql = 'INSERT INTO customers (first_name, last_name, email, phone, password_hash) VALUES (?, ?, ?, ?, ?)'
-      const values = [firstName, lastName, email, phoneNumber, password]
+      const values = [firstName, lastName, email, phoneNumber, passwordHash]
       connection.query(sql, values, (error, results) => {
         if (error) {
           console.error('Error creating account:', error);
