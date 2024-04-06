@@ -9,11 +9,8 @@
   "author": "Santiago",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "bcrypt": "^5.1.1",
-=======
     "cors": "^2.8.5",
->>>>>>> be122d48f1a10d6625d701a0812347e86e7013ae
     "express": "^4.19.2",
     "mysql": "^2.18.1",
     "node": "^18.20.1"
