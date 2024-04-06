@@ -14,7 +14,10 @@ const logoutRoute = require('./routes/logout');
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 
 const THREE_HOURS = 3 * 60 * 60 * 1000;
 
