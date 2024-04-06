@@ -1,10 +1,17 @@
 const express = require('express');
 const mysql = require('mysql');
+<<<<<<< HEAD
 const bcrypt = require('bcrypt');
+=======
+const cors = require('cors');
+
+>>>>>>> be122d48f1a10d6625d701a0812347e86e7013ae
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
+
 
 const connection = mysql.createConnection({
   host: 'db-shalom.cds6c28ae9a0.us-east-2.rds.amazonaws.com',
