@@ -30,7 +30,7 @@ const options = {
   connectionLimit: 10,
   createDatabaseTable: true,
 }
-const sessionStore = new MySQLStore(options);
+const sessionStore = new MySQLStore(options, pool);
 
 app.use(session({
   name: process.env.SESS_NAME,
@@ -48,7 +48,7 @@ app.use(session({
 app.get('/api/authenticated', (req, res) => {
   console.log(req.cookies);
   console.log(req.session.userData);
-  const userData = req.session.userData || {name: null, isAdmin: false, isAuthenticated: false};
+  const userData = req.session.userData ? req.session.userData : {name: null, isAdmin: false, isAuthenticated: false};
   res.json(userData);
 });
 
