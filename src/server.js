@@ -2,6 +2,8 @@ const express = require('express');
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 require('dotenv').config();
 const pool = require('./db.js');
 const session = require('express-session');
@@ -18,7 +20,8 @@ app.use(cors({
   origin: true,
   credentials: true
 }));
-
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 const THREE_HOURS = 3 * 60 * 60 * 1000;
 
 const options = {
@@ -36,7 +39,7 @@ app.use(session({
   name: process.env.SESS_NAME,
   secret: process.env.SESS_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   store: sessionStore,
   cookie: {
     maxAge: THREE_HOURS, 
@@ -46,10 +49,8 @@ app.use(session({
 }));
 
 app.get('/api/authenticated', (req, res) => {
-  console.log(req.cookies);
-  console.log(req.session.userData);
-  const userData = req.session.userData ? req.session.userData : {name: null, isAdmin: false, isAuthenticated: false};
-  res.json(userData);
+  const user = req.session.user ? req.session.user : { isLogged: false };
+  res.send(user);
 });
 
 app.use('/api/products', productsRoute);
@@ -57,7 +58,7 @@ app.use('/api/signup', signupRoute);
 app.use('/api/login', loginRoute);
 app.use('/api/logout', logoutRoute)
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

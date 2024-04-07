@@ -11,13 +11,9 @@ router.post('/', (req, res) => {
       } else if (adminResults.length > 0) {
         const admin = adminResults[0];
         if (admin.password_hash == password) {
-          req.session.userData = {
-            name: admin.username,
-            isAuthenticated: true,
-            isAdmin: true
-          }
-          console.log(req.session.userData);
-          res.status(200).json({...req.session.userData})
+          req.session.user = admin
+          console.log(req.session.user);
+          res.status(200).json({...req.session.user})
         } else {
           res.status(401).json({ error: 'Incorrect password' });
         }
@@ -36,13 +32,8 @@ router.post('/', (req, res) => {
                 console.error('Error comparing passwords:', err);
                 res.status(500).json({ error: 'Error comparing passwords' });
               } else if (result) {
-                req.session.userData = {
-                    name: user.first_name,
-                    isAuthenticated: true,
-                    isAdmin: false
-                };
-                res.status(200).json({...req.session.userData});
-                console.log(req.session.userData);
+                req.session.user = user;
+                res.status(200).json({...req.session.user});
               } else {
                 res.status(401).json({ error: 'Incorrect password' });
               }
