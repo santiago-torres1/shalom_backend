@@ -49,8 +49,8 @@ app.use(session({
 }));
 
 app.get('/api/authenticated', (req, res) => {
-  const user = req.session.user ? req.session.user : { isLogged: false };
-  res.send(user);
+  const userData = req.session.userData ? req.session.userData : { name: null, isAdmin: false, isAuthenticated: false};
+  res.send(userData);
 });
 
 app.use('/api/products', productsRoute);
