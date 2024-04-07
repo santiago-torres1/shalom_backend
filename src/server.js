@@ -46,7 +46,7 @@ app.use(session({
 }));
 
 app.get('/api/authenticated', (req, res) => {
-  console.log(req.sessionID);
+  console.log(req.cookies);
   console.log(req.session.userData);
   const userData = req.session.userData || {name: null, isAdmin: false, isAuthenticated: false};
   res.json(userData);

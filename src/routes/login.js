@@ -15,7 +15,8 @@ router.post('/', (req, res) => {
             name: admin.username,
             isAuthenticated: true,
             isAdmin: true
-          };
+          }
+          console.log(req.session.userData);
           res.status(200).json({...req.session.userData})
         } else {
           res.status(401).json({ error: 'Incorrect password' });
@@ -40,7 +41,8 @@ router.post('/', (req, res) => {
                     isAuthenticated: true,
                     isAdmin: false
                 };
-                res.status(200).json({...req.session.userData})
+                res.status(200).json({...req.session.userData});
+                console.log(req.session.userData);
               } else {
                 res.status(401).json({ error: 'Incorrect password' });
               }
