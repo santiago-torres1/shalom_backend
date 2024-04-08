@@ -8,10 +8,25 @@ router.get('/', (req, res) => {
         console.error('Error fetching products:', error);
         res.status(500).json({ error: 'Internal Server Error' });
       } else {
+        console.log(results)
         res.json(results);
       }
     });
   });
+
+router.get('/:id', (req, res) => {
+  const productId = parseInt(req.params.id);
+  pool.query('SELECT * FROM products WHERE id = ?', [productId], (error, results) => {
+    if (error) {
+      console.error('Error fetching product:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else if (results.length === 0) {
+      res.status(404).json({ error: 'Product not found' });
+    } else {
+      res.json(results[0]); 
+    }
+  });
+});
 
 router.post('/', (req, res) => {
     const { name, description, imgurl, quantity, price } = req.body;
