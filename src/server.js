@@ -8,6 +8,7 @@ require('dotenv').config();
 const pool = require('./db.js');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+const productsRoute = require('./routes/products');
 const signupRoute = require('./routes/signup');
 const loginRoute = require('./routes/login');
 const logoutRoute = require('./routes/logout');
@@ -53,7 +54,7 @@ app.get('/api/authenticated', (req, res) => {
   const userData = req.session.userData ? req.session.userData : { name: null, isAdmin: false, isAuthenticated: false};
   res.send(userData);
 });
-
+/*
 app.get('/api/products', (req, res) => {
   pool.query('SELECT * FROM products', (error, results) => {
     if (error) {
@@ -65,7 +66,7 @@ app.get('/api/products', (req, res) => {
   });
 });
 
-app.post('/api/products/add', (req, res) => {
+app.post('/api/products', (req, res) => {
   const { name, description, imgurl, quantity, price } = req.body;
   pool.query('INSERT INTO products (name, description, imgurl, quantity, price) VALUES (?, ?, ?, ?, ?)',
       [name, description, imgurl, quantity, price],
@@ -80,7 +81,7 @@ app.post('/api/products/add', (req, res) => {
   );
 });
 
-app.put('/api/products/edit/:id', (req, res) => {
+app.put('/api/products/:id', (req, res) => {
   const productId = req.params.id;
   const { name, description, imgurl, quantity, price } = req.body;
   pool.query('UPDATE products SET name = ?, description = ?, imgurl = ?, quantity = ?, price = ? WHERE id = ?',
@@ -96,7 +97,7 @@ app.put('/api/products/edit/:id', (req, res) => {
   );
 });
 
-app.delete('/api/products/delete/:id', (req, res) => {
+app.delete('/api/products/:id', (req, res) => {
   const productId = req.params.id;
   pool.query('DELETE FROM products WHERE id = ?', productId, (error, results) => {
       if (error) {
@@ -107,7 +108,8 @@ app.delete('/api/products/delete/:id', (req, res) => {
       }
   });
 });
-
+*/
+app.use('/api/products', productsRoute);
 app.use('/api/signup', signupRoute);
 app.use('/api/login', loginRoute);
 app.use('/api/logout', logoutRoute)
