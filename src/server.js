@@ -65,7 +65,7 @@ app.get('/api/products', (req, res) => {
   });
 });
 
-app.post('/api/products', (req, res) => {
+app.post('/api/products/add', (req, res) => {
   const { name, description, imgurl, quantity, price } = req.body;
   pool.query('INSERT INTO products (name, description, imgurl, quantity, price) VALUES (?, ?, ?, ?, ?)',
       [name, description, imgurl, quantity, price],
@@ -80,7 +80,7 @@ app.post('/api/products', (req, res) => {
   );
 });
 
-app.put('/api/products/:id', (req, res) => {
+app.put('/api/products/edit/:id', (req, res) => {
   const productId = req.params.id;
   const { name, description, imgurl, quantity, price } = req.body;
   pool.query('UPDATE products SET name = ?, description = ?, imgurl = ?, quantity = ?, price = ? WHERE id = ?',
@@ -96,7 +96,7 @@ app.put('/api/products/:id', (req, res) => {
   );
 });
 
-app.delete('/api/products/:id', (req, res) => {
+app.delete('/api/products/delete/:id', (req, res) => {
   const productId = req.params.id;
   pool.query('DELETE FROM products WHERE id = ?', productId, (error, results) => {
       if (error) {
