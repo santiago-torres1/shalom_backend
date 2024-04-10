@@ -14,7 +14,7 @@ router.post('/', (req, res) => {
     const existingItemIndex = cart.items.findIndex(item => item.itemId === itemId);
     console.log(req.body);
     if (existingItemIndex !== -1) {
-        cart.items[existingItemIndex].quantity += 1;
+        cart.items[existingItemIndex].quantity += quantity;
     } else {
         cart.items.push({ itemId, quantity });
     }
@@ -28,7 +28,7 @@ router.patch('/', (req, res) => {
     const existingItemIndex = cart.items.findIndex(item => item.itemId === itemId);
     console.log(req.body);
     if (existingItemIndex !== -1) {
-        cart.items[existingItemIndex].quantity -= 1;
+        cart.items[existingItemIndex].quantity -= quantity;
         if (cart.items[existingItemIndex].quantity <= 0) {
             cart.items.splice(existingItemIndex, 1);
         }
