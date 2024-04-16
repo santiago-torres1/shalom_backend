@@ -13,6 +13,7 @@ router.post('/', (req, res) => {
         if (admin.password_hash == password) {
           req.session.userData = {
             name: admin.username,
+            email: null,
             isAdmin: true,
             isAuthenticated: true,
           }
@@ -38,6 +39,7 @@ router.post('/', (req, res) => {
               } else if (result) {
                 req.session.userData = {
                   name: user.first_name,
+                  email: user.email,
                   isAdmin: false,
                   isAuthenticated: true,
                 }
