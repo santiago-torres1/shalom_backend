@@ -18,7 +18,6 @@ router.post('/', (req, res) => {
             isAuthenticated: true,
           }
           res.status(200).send(req.session.userData);
-          console.log(req.session.userData);
         } else {
           res.status(401).json({ error: 'Incorrect password' });
         }
@@ -44,7 +43,6 @@ router.post('/', (req, res) => {
                   isAuthenticated: true,
                 }
                 res.status(200).send(req.session.userData);
-                console.log(req.session.userData);
               } else {
                 res.status(401).json({ error: 'Incorrect password' });
               }

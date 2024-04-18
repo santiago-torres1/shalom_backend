@@ -12,7 +12,6 @@ router.post('/', (req, res) => {
     const { itemId, quantity } = req.body;
     const cart = req.cookies.cartShalom;
     const existingItemIndex = cart.items.findIndex(item => item.itemId === itemId);
-    console.log(req.body);
     if (existingItemIndex !== -1) {
         cart.items[existingItemIndex].quantity += quantity;
     } else {
@@ -26,7 +25,6 @@ router.patch('/', (req, res) => {
     const { itemId, quantity } = req.body;
     const cart = req.cookies.cartShalom;
     const existingItemIndex = cart.items.findIndex(item => item.itemId === itemId);
-    console.log(req.body);
     if (existingItemIndex !== -1) {
         cart.items[existingItemIndex].quantity -= quantity;
         if (cart.items[existingItemIndex].quantity <= 0) {

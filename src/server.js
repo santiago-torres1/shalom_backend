@@ -11,6 +11,7 @@ const signupRoute = require('./routes/signup');
 const loginRoute = require('./routes/login');
 const logoutRoute = require('./routes/logout');
 const cartRoute = require('./routes/cart.js');
+const paymentRoute = require('./routes/payment.js')
 
 const app = express();
 
@@ -66,7 +67,8 @@ app.use('/api/products', productsRoute);
 app.use('/api/signup', signupRoute);
 app.use('/api/login', loginRoute);
 app.use('/api/logout', logoutRoute);
-app.use('/api/cart', cartRoute)
+app.use('/api/cart', cartRoute);
+app.use('/api/payment', paymentRoute);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
