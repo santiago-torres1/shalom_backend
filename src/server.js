@@ -12,6 +12,7 @@ const loginRoute = require('./routes/login');
 const logoutRoute = require('./routes/logout');
 const cartRoute = require('./routes/cart.js');
 const paymentRoute = require('./routes/payment.js')
+const sendPayURoute = require('./routes/sendPayU.js')
 
 const app = express();
 
@@ -69,6 +70,7 @@ app.use('/api/login', loginRoute);
 app.use('/api/logout', logoutRoute);
 app.use('/api/cart', cartRoute);
 app.use('/api/payment', paymentRoute);
+app.use('/api/sendPayU', sendPayURoute);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
