@@ -72,6 +72,10 @@ app.get('/api/check-email', (req, res) => {
   });
 })
 
+app.post('/api/post', (req, res) => {
+  //console.log(req);
+})
+
 app.use((req, res, next) => {
   if (!req.cookies.cartShalom) {
     const maxAge = 7 * 24 * 60 * 60 * 1000;

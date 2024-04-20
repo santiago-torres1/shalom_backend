@@ -89,6 +89,7 @@ router.post('/', async (req, res) => {
                     res.status(500).json({ error: 'Internal Server Error' });
                 } else {
                     console.log('Order products inserted successfully');
+                    console.log(requestData);
                     res.status(200).send(requestData);
                 }
             });
