@@ -23,6 +23,7 @@ const checkSignature = (signature, data, type) => {
     const hash = crypto.createHash(type);
     hash.update(dataString);
     const generatedSignature = hash.digest('hex');
+    console.log(generatedSignature, 'and', signature)
     return generatedSignature === signature;
 };
 
@@ -65,7 +66,7 @@ router.get('/', async (req, res) => {
         TX_VALUE = roundCurrency(TX_VALUE);
         const filteredData = { merchantId, referenceCode, TX_VALUE, currency, transactionState };
         if(checkSignature(signature, filteredData, 'md5')){
-            const redirectURL = `http://localhost:3000/payment-confirmation?transactionState=${getResponse.transactionState}&referenceCode=${getResponse.referenceCode}&buyerEmail=${getResponse.buyerEmail}`
+            const redirectURL = `https://www.tiendashalom.top/payment-confirmation?transactionState=${getResponse.transactionState}&referenceCode=${getResponse.referenceCode}&buyerEmail=${getResponse.buyerEmail}`
             res.redirect(redirectURL)
         } else {
             res.redirect('https://www.tiendashalom.top/payment-error')

@@ -100,6 +100,4 @@ router.post('/', async (req, res) => {
 module.exports = router;
 
 
-// Create a SHA256 hash of the signature
-
 
