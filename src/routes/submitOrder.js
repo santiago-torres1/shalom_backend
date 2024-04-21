@@ -41,6 +41,7 @@ router.post('/', async (req, res) => {
     let referenceCode = getReferenceCode();
     console.log(referenceCode);
     let requestData = req.body;
+    console.log(requestData.paymentType);
     const signature = `${APIkey}~${merchantId}~${referenceCode}~${requestData.amount}~${currency}`;
     const hash = crypto.createHash('sha256');
     hash.update(signature);
@@ -61,7 +62,7 @@ router.post('/', async (req, res) => {
         department: requestData.department,
         postal_code: requestData.postalCode,
         email: requestData.email,
-        order_status: '1',
+        order_status: requestData.paymentType === 'PayU' ? '7' : '2',
         id_type: requestData.idType,
         id_number: requestData.idNumber,
         address_secondary: requestData.addressSecondary,
@@ -89,7 +90,6 @@ router.post('/', async (req, res) => {
                     res.status(500).json({ error: 'Internal Server Error' });
                 } else {
                     console.log('Order products inserted successfully');
-                    console.log(requestData);
                     res.status(200).send(requestData);
                 }
             });

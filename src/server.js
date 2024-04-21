@@ -73,7 +73,7 @@ app.get('/api/check-email', (req, res) => {
 })
 
 app.post('/api/post', (req, res) => {
-  //console.log(req);
+  console.log(req.body);
 })
 
 app.use((req, res, next) => {
