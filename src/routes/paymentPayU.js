@@ -144,7 +144,7 @@ const updateProductQuantities = (products) => {
 
 const changeOrderStatus = (orderId, status) => {
     return new Promise((resolve, reject) => {
-        pool.query('UPDATE orders SET status = ? WHERE id = ?', [status, orderId], (error, results) => {
+        pool.query('UPDATE orders SET status = ? WHERE reference_number = ?', [status, orderId], (error, results) => {
             if (error) {
                 console.error('Error changing order status:', error);
                 reject(error);
@@ -170,7 +170,7 @@ const deleteOrderProducts = (orderId) => {
 
 const deleteOrder = (orderId) => {
     return new Promise((resolve, reject) => {
-        pool.query('DELETE FROM orders WHERE id = ?', [orderId], (error, results) => {
+        pool.query('DELETE FROM orders WHERE reference_number = ?', [orderId], (error, results) => {
             if (error) {
                 console.error('Error querying order products:', error);
                 reject(error);
