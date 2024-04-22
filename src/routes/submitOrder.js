@@ -56,6 +56,7 @@ router.post('/', async (req, res) => {
         referenceCode: referenceCode,
     };
     const orderData = {
+        order_name: requestData.firstName + ' ' + requestData.lastName,
         total_amount: requestData.amount,
         address: requestData.address,
         city: requestData.city,

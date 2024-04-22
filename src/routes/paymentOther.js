@@ -1,5 +1,6 @@
 /*
 codigos de estado:
+0 - error
 1 - pago aprobado
 2 - pago pendiente
 3 - pago rechazado
@@ -14,50 +15,6 @@ const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 const pool = require('../db');
-
-const APIkey = '4Vj8eK4rloUd272L48hsrarnUA';
-
-const checkSignature = (signature, data, type) => {
-    const { ...dataWithoutSignature } = data;
-    const dataString = APIkey + '~' + Object.values(dataWithoutSignature).join('~');
-    const hash = crypto.createHash(type);
-    hash.update(dataString);
-    const generatedSignature = hash.digest('hex');
-    console.log(generatedSignature, 'and', signature)
-    return generatedSignature === signature;
-};
-
-const roundCurrency = (currency) => {
-    const decimalCurrency = parseFloat(currency);
-    const multipliedCurrency = decimalCurrency*10; //1232.5
-    const firstDecimal = Math.floor(multipliedCurrency % 10);
-    const secondDecimal = Math.floor((multipliedCurrency * 10) % 10);
-    let roundedCurrency;
-    if (secondDecimal === 5) {
-        if (firstDecimal % 2 === 0) {
-            roundedCurrency = Math.floor(multipliedCurrency) / 10;
-        } else {
-            roundedCurrency = Math.ceil(multipliedCurrency) / 10;
-        }
-    } else {
-        roundedCurrency = Math.round(multipliedCurrency) / 10;
-    }
-
-    return roundedCurrency.toFixed(1); 
-};
-
-const roundCurrencyPost = (currency) => {
-    const decimalCurrency = parseFloat(currency);
-    const multipliedCurrency = decimalCurrency*10; //1232.5
-    const firstDecimal = Math.floor(multipliedCurrency % 10);
-    const secondDecimal = Math.floor((multipliedCurrency * 10) % 10);
-    if (secondDecimal === 0) {
-        return (decimalCurrency.toFixed(1));
-    } else {
-        return (decimalCurrency);
-    }
-}
-
 
 router.get('/', async (req, res) => {
     try {
@@ -90,7 +47,7 @@ router.post('/', async (req, res) => {
         if (state_pol === '4') {
             const products = await getOrderProducts(reference_sale);
             await updateProductQuantities(products);
-            await changeOrderStatus(reference_sale, '1'); 
+            await changeOrderStatus(reference_sale, '2'); 
             res.status(200).send('Order approved');
         } else if (state_pol === '6') {
             await changeOrderStatus(reference_sale, '3'); 

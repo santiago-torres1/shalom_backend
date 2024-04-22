@@ -9,6 +9,7 @@
   "author": "Santiago",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1603.0",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -19,6 +20,8 @@
     "express": "^4.19.2",
     "express-mysql-session": "^3.0.0",
     "express-session": "^1.18.0",
+    "fs": "^0.0.1-security",
+    "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "node": "^18.20.1"
   },

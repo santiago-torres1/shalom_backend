@@ -11,8 +11,10 @@ const signupRoute = require('./routes/signup');
 const loginRoute = require('./routes/login');
 const logoutRoute = require('./routes/logout');
 const cartRoute = require('./routes/cart.js');
-const paymentPayURoute = require('./routes/paymentPayU.js')
-const submitOrderRoute = require('./routes/submitOrder.js')
+const paymentPayURoute = require('./routes/paymentPayU.js');
+const submitOrderRoute = require('./routes/submitOrder.js');
+const imagesRoute = require('./routes/images.js');
+const ordersRoute = require('./routes/orders.js');
 
 const app = express();
 
@@ -91,6 +93,8 @@ app.use('/api/logout', logoutRoute);
 app.use('/api/cart', cartRoute);
 app.use('/api/paymentPayU', paymentPayURoute);
 app.use('/api/submitOrder', submitOrderRoute);
+app.use('/api/images', imagesRoute);
+app.use('/api/orders', ordersRoute);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
