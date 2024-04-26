@@ -144,7 +144,7 @@ const updateProductQuantities = (products) => {
 
 const changeOrderStatus = (orderId, status) => {
     return new Promise((resolve, reject) => {
-        pool.query('UPDATE orders SET status = ? WHERE reference_number = ?', [status, orderId], (error, results) => {
+        pool.query('UPDATE orders SET order_status = ? WHERE reference_number = ?', [status, orderId], (error, results) => {
             if (error) {
                 console.error('Error changing order status:', error);
                 reject(error);

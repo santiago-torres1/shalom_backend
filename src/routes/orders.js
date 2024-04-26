@@ -4,7 +4,7 @@ const pool = require('../db.js'); // Assuming you have a pool configured for you
 
 // Route to fetch orders
 router.get('/', (req, res) => {
-    const { orderBy, search } = req.query;
+    const { orderBy, search, statusFilter } = req.query;
     let queryString = `
                 SELECT
                     o.reference_number AS referenceNumber,
@@ -35,6 +35,11 @@ router.get('/', (req, res) => {
         conditions.push(`(o.reference_number LIKE ? OR o.order_name LIKE ? OR o.email LIKE ?)`);
         const searchParam = `%${search}%`;
         queryParams.push(searchParam, searchParam, searchParam);
+    }
+
+    if (statusFilter) {
+        conditions.push(`o.order_status = ?`);
+        queryParams.push(statusFilter);
     }
 
     if (conditions.length > 0) {
@@ -82,7 +87,6 @@ router.get('/', (req, res) => {
                     delete order.quantities;
                 }
             }
-            console.log(results);
             res.json(results);
         }
     });
@@ -98,7 +102,7 @@ router.put('/:referenceNumber', async (req, res) => {
 
         // If tracking ID is provided, add it to the update query
         if (trackingId) {
-            updateQuery = 'UPDATE orders SET order_status = ?, tracking_id = ? WHERE reference_number = ?';
+            updateQuery = 'UPDATE orders SET tracking_id = ?, order_status = ? WHERE reference_number = ?';
             queryParams.unshift(trackingId);
         }
 
